@@ -1,10 +1,16 @@
+package tricks
 
 import (
 	"log"
 	"time"
 )
 
-// clear the noise on log output
+const (
+	MaxInt = int(^uint(0) >> 1)
+	MinInt = ^MaxInt
+)
+
+// Clear the noise on log output.
 func fn() {
 	log.Println("----------\n")
 	defer log.Println("----------\n")
@@ -12,17 +18,17 @@ func fn() {
 	// ...
 }
 
-// create a timer
+// Create a timer, return function that stops the timer.
 func StartTimer(name string) func() {
 	t := time.Now()
 	log.Println(name, "started")
 	return func() {
-		d := time.Now.Sub(t)
+		d := time.Since(t)
 		log.Println(name, "took", d)
 	}
 }
 
-// example usage of timer
+// Example usage of timer.
 func TimedFunc() {
 	stop := StartTimer("TimedFunc")
 	defer stop()
@@ -30,4 +36,14 @@ func TimedFunc() {
 	// ...
 }
 
-// Accept interfaces, return structs
+//
+// Parity
+//
+
+func IsEven(x int) bool {
+	return x&-2 == x
+}
+
+func IsOdd(x int) bool {
+	return !IsEven(x)
+}
